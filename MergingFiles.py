@@ -5,32 +5,52 @@ import pandas as pd
 
 import ntpath
 
-class MergeFiles(Step):
+class SelectingFiles(Step):
     def __init__(self, parent, data, stepname):
         super().__init__(parent, data, stepname)
 
-        self.col_list = []
-        self.file_list = []
-        self.data_frame = []
+        self.file_dir_list = []
+        self.export_file = False
+        self.export_file_name = ''
+        self.csv_df_list = []
 
         self.select_files = Label(self, text='Please select the CSV files you want to merge '
                                              '(press shift to select multiple lines):', wraplength=400)
-        self.select_files.pack()
+        self.select_files.grid(sticky='W', row=0, column=1)
 
         self.select_files_button = Button(self, text='Select', command=self.open_files)
-        self.select_files_button.pack()
+        self.select_files_button.grid(row=0, column=2)
 
-        self.create_merged_data_frame()
+        self.empty_label = Label(self, text='')
+        self.empty_label.grid(row=1, column=2)
+
+        self.select_files = Label(self, text='Please name your merged file: ')
+        self.select_files.grid(sticky='W', row=2, column=1)
+
+        self.file_name = StringVar()
+        vcmd1 = (self.register(self.update_export_name), '%P')
+        self.text_box = Entry(self, textvariable=self.file_name, validate="key", validatecommand=vcmd1)
+        self.text_box.grid(sticky='W', row=2, column=2)
+        self.export_file_name = self.file_name.get()
+
+        self.submit = Button(self, text='Submit', command=self.merge_export_final_file)
+        self.submit.grid(row=3, column=2)
+
+    def update_export_name(self, new_text):
+        self.export_file_name = new_text
+        return True
 
     def open_files(self):
         filez = askopenfilenames(parent=self, title='Choose a file')
-        file_dir_list = list(filez)
-        for dir in file_dir_list:
-            self.file_list.append(ntpath.basename(dir))
-            name_string = ntpath.basename(dir)
-            self.col_list.append(name_string[:-4])
+        self.file_dir_list = list(filez)
 
-    def create_merged_data_frame(self):
-        self.data_frame = [pd.read_csv(f) for f in self.file_list]
-        print(self.data_frame)
+    def merge_export_final_file(self):
+        for f in self.file_dir_list:
+            temp_df = pd.read_csv(f, header=None)
+            name_string = ntpath.basename(f)
+            col_name = name_string[:-4]
+            temp_df.columns = [col_name]
+            self.csv_df_list.append(temp_df)
+        self.combined_csv = pd.concat(self.csv_df_list, sort=False, axis=1)
+        self.combined_csv.to_csv(self.export_file_name, index=False)
 

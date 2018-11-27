@@ -3,14 +3,14 @@ from tkinter.filedialog import askopenfilenames
 from Step import Step
 from Wizard import Wizard
 
-from MergingFiles import MergeFiles
+from MergingFiles import SelectingFiles
 
 
 class finalWizard(Wizard):
     def __init__(self, parent, data):
         super().__init__(parent, data)
 
-        steps = [MergeFiles(self, self.data, 'mergeFiles')]
+        steps = [SelectingFiles(self, self.data, 'selectFiles')]
 
         self.set_steps(steps)
         self.start()
