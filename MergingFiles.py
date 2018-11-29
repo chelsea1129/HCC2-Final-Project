@@ -6,8 +6,8 @@ import pandas as pd
 import ntpath
 
 class SelectingFiles(Step):
-    def __init__(self, parent, data, stepname):
-        super().__init__(parent, data, stepname)
+    def __init__(self, parent,stepname):
+        super().__init__(parent, stepname)
 
         self.file_dir_list = []
         self.export_file = False

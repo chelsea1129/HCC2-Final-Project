@@ -1,7 +1,7 @@
 from tkinter import Tk, Button, Frame
 
 class Wizard(Frame):
-    def __init__(self, parent, data):
+    def __init__(self, parent):
         super().__init__(parent)
 
         self.parent = parent
@@ -10,7 +10,7 @@ class Wizard(Frame):
         self.current_step_index = 0
 
         self.steps = []
-        self.data = data
+        # self.data = data
 
         self.button_frame = Frame(self, bd=1, relief="raised")
         self.content_frame = Frame(self)
@@ -56,8 +56,8 @@ class Wizard(Frame):
     def finish(self):
         self.current_step_index = 0
 
-        print("data is: ")
-        print(self.data)
+        # print("data is: ")
+        # print(self.data)
 
         self.parent.quit()
 
@@ -118,8 +118,8 @@ if __name__ == "__main__":
     root = Tk()
 
     data = {}
-    my_gui = Wizard(root, data)
-    steps = [DemoStep(my_gui, data, "one"), DemoStep(my_gui, data, "two"), DemoStep(my_gui, data, "three")]
+    my_gui = Wizard(root)
+    steps = [DemoStep(my_gui, "one"), DemoStep(my_gui, "two"), DemoStep(my_gui, "three")]
     #steps = [DemoStep(my_gui, data, "one")]
     #steps = []
     my_gui.set_steps(steps)

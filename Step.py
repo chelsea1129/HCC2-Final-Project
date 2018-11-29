@@ -2,14 +2,14 @@ from tkinter import Tk, Label, Radiobutton, Button, StringVar, Entry, Scale, Int
 
 
 class Step(Frame):
-    def __init__(self, parent, data, stepname):
+    def __init__(self, parent, stepname):
         super().__init__(parent)
         self.parent = parent
-        self.data = data
+        # self.data = data
         self.stepname = stepname
-
-        if not stepname in self.data:
-            self.data[stepname] = {}
+        #
+        # if not stepname in self.data:
+        #     self.data[stepname] = {}
 
         self.completed = True
         self.previous_enabled = True

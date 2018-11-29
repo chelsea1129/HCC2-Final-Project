@@ -1,16 +1,14 @@
 from tkinter import *
-from tkinter.filedialog import askopenfilenames
-from Step import Step
 from Wizard import Wizard
 
 from MergingFiles import SelectingFiles
-
+from DataAnalysis import Analysis
 
 class finalWizard(Wizard):
-    def __init__(self, parent, data):
-        super().__init__(parent, data)
-
-        steps = [SelectingFiles(self, self.data, 'selectFiles')]
+    def __init__(self, parent):
+        super().__init__(parent)
+        steps = [SelectingFiles(self, 'selectFiles'),
+                 Analysis(self, 'analyzeData')]
 
         self.set_steps(steps)
         self.start()
@@ -18,8 +16,7 @@ class finalWizard(Wizard):
 if __name__ == "__main__":
     root = Tk()
 
-    data = {}
-    final_gui = finalWizard(root, data)
+    final_gui = finalWizard(root)
     final_gui.pack()
 
     root.mainloop()
