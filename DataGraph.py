@@ -15,7 +15,7 @@ class Graph(Step):
         self.data_frame = pd.DataFrame()
         self.options = []
 
-        Label(self, text='Welcome to the plot-it section!', font=('Helvetica', 20)).grid(sticky='W', row=0, column=1)
+        Label(self, text='Create Data Graphs', font=('Helvetica', 20)).grid(sticky='W', row=0, column=1)
 
         self.file_name_lbl = Label(self, text='Which csv data file do you want to plot?')
         self.file_name_lbl.grid(sticky='W', row=1, column=1)
